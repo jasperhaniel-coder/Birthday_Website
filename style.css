@@ -158,33 +158,9 @@ nav a {
 
 
 /* General Sections */
-
-.message,
 .surprise {
   padding: 110px 8%;
   text-align: center;
-}
-
-
-/* Appreciation */
-
-.message {
-  background: rgb(225, 217, 217);
-}
-
-.message h2,
-.gallery-section h2,
-.surprise h2 {
-  font-size: 42px;
-  margin-bottom: 25px;
-}
-
-.message p {
-  max-width: 750px;
-  margin: 10px auto;
-
-  color: #555;
-  font-size: 17px;
 }
 
 
@@ -732,8 +708,7 @@ footer {
     height: 220px;
   }
 
-  .message h2,
-  .gallery-section h2,
+ .gallery-section h2,
   .surprise h2,
   .wishes-section h2 {
     font-size: 30px;

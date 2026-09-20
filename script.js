@@ -7,6 +7,8 @@ const wishesList = document.getElementById("wishesList");
 
 const birthdayDate = document.getElementById("birthdayDate");
 
+// Birthday Date
+
 if (birthdayDate) {
   const today = new Date();
 
@@ -18,6 +20,14 @@ if (birthdayDate) {
   });
 }
 
+// Lock Cake Surprise Initially
+
+surpriseBtn.disabled = true;
+
+surpriseBtn.textContent = "🔒 Write a Wish First";
+
+// Add Wish
+
 wishBtn.addEventListener("click", function () {
   const wishText = wishInput.value.trim();
 
@@ -26,28 +36,98 @@ wishBtn.addEventListener("click", function () {
     return;
   }
 
+  const emptyMessage = document.querySelector(".empty-wishes");
+
+  if (emptyMessage) {
+    emptyMessage.remove();
+  }
+
+  // Create Wish Card
+
   const wishCard = document.createElement("div");
+
   wishCard.classList.add("wish-card");
 
+  // Create Wish Paragraph
+
   const wishParagraph = document.createElement("p");
-  wishParagraph.innerHTML = `<span class="wish-heart">❤️</span> ${wishText}`;
+
+  const heart = document.createElement("span");
+
+  heart.classList.add("wish-heart");
+
+  heart.textContent = "❤️";
+
+  wishParagraph.appendChild(heart);
+
+  wishParagraph.appendChild(document.createTextNode(" " + wishText));
+
+  // Create Delete Button
 
   const deleteBtn = document.createElement("button");
+
   deleteBtn.textContent = "🗑️ Delete";
+
   deleteBtn.classList.add("delete-wish");
+
+  // Delete Wish
 
   deleteBtn.addEventListener("click", function () {
     wishCard.remove();
+
+    updateSurpriseButton();
+
+    // Show Empty Message If There Are No Wishes
+
+    const remainingWishes = document.querySelectorAll(".wish-card");
+
+    if (remainingWishes.length === 0) {
+      const emptyMessage = document.createElement("p");
+
+      emptyMessage.classList.add("empty-wishes");
+
+      emptyMessage.textContent = "Your wish could be the first one here...";
+
+      wishesList.appendChild(emptyMessage);
+    }
   });
 
+  // Put Wish Inside Card
+
   wishCard.appendChild(wishParagraph);
+
   wishCard.appendChild(deleteBtn);
+
+  // Put Card Inside Wishes List
 
   wishesList.appendChild(wishCard);
 
+  // Clear Textarea
+
   wishInput.value = "";
+
+  // Unlock Cake Surprise
+
+  updateSurpriseButton();
 });
 
+// Update Cake Button
+
+function updateSurpriseButton() {
+  const wishes = document.querySelectorAll(".wish-card");
+
+  if (wishes.length > 0) {
+    surpriseBtn.disabled = false;
+
+    surpriseBtn.textContent = "🎁 Cake Surprise";
+  } else {
+    surpriseBtn.disabled = true;
+
+    surpriseBtn.textContent = "🔒 Write a Wish First";
+  }
+}
+
+// Cake Surprise
 
 surpriseBtn.addEventListener("click", function () {
   const flames = document.querySelectorAll(".flame");
@@ -57,10 +137,12 @@ surpriseBtn.addEventListener("click", function () {
   });
 
   surpriseMessage.textContent =
-    "🎉 Happy Birthday, Brother Chima! May this new year bring you greater blessings, greater opportunities and greater joy. ❤️ Hip Hip Hip, Hurray!!! ";
+    "🎉 Happy Birthday, Brother Chima! May this new year bring you greater blessings, greater opportunities and greater joy. ❤️ Hip Hip Hip, Hurray!!!";
 
   createConfetti();
 });
+
+// Confetti
 
 function createConfetti() {
   for (let i = 0; i < 70; i++) {
@@ -69,7 +151,9 @@ function createConfetti() {
     confetti.textContent = "✨";
 
     confetti.style.position = "fixed";
+
     confetti.style.left = Math.random() * 100 + "vw";
+
     confetti.style.top = "-20px";
 
     confetti.style.fontSize = Math.random() * 20 + 10 + "px";
@@ -95,6 +179,7 @@ function createConfetti() {
 
       {
         duration: duration,
+
         easing: "linear",
       },
     );
